@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Plugin QGIS : EDEA_EraseTools v6.0"""
+"""Plugin QGIS : EDEA_EraseTools v6.0.1"""
 
 def classFactory(iface):
     from .edea_erasetools import EdeaEraseToolsPlugin
