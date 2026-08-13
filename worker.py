@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Worker thread asynchrone pour EDEA_EraseTools v6.0.
+Worker thread asynchrone pour EDEA_EraseTools v6.0.1.
 Généralisé à tout type de couche vectorielle (points, lignes, polygones) :
 la mesure (longueur / surface / nombre d'entités) s'adapte au type de
 géométrie de chaque couche.
@@ -16,6 +16,7 @@ import tempfile
 import base64
 import urllib.request
 import urllib.error
+import urllib.parse
 from datetime import datetime
 
 from qgis.PyQt.QtCore import QThread, pyqtSignal
@@ -203,6 +204,15 @@ class EraseWorker(QThread):
             endpoint = (f"{gs_url}/rest/workspaces/{workspace}/datastores/{datastore}"
                         f"/file.shp?configure=first&update=overwrite")
 
+            # Sécurité : n'autoriser que http/https pour éviter l'ouverture
+            # de schémas d'URL inattendus (ex: file://) via urlopen.
+            scheme = urllib.parse.urlsplit(endpoint).scheme
+            if scheme not in ("http", "https"):
+                raise Exception(
+                    f"URL GeoServer invalide : schéma « {scheme} » non autorisé "
+                    "(seuls http et https sont acceptés)."
+                )
+
             with open(zip_path, 'rb') as f:
                 data = f.read()
 
@@ -212,7 +222,7 @@ class EraseWorker(QThread):
             req.add_header('Authorization', f'Basic {credentials}')
 
             try:
-                with urllib.request.urlopen(req, timeout=60) as resp:
+                with urllib.request.urlopen(req, timeout=60) as resp:  # nosec B310
                     code = resp.getcode()
                     self._jlog(f"✓ GeoServer : réponse HTTP {code}")
             except urllib.error.HTTPError as e:
@@ -264,12 +274,12 @@ class EraseWorker(QThread):
             md = couche.metadata()
             md.setIdentifier(str(datetime.now().timestamp()))
             md.setTitle(couche.name())
-            md.setAbstract(description or "Couche générée par EDEA_EraseTools v6.0")
+            md.setAbstract(description or "Couche générée par EDEA_EraseTools v6.0.1")
             md.setLanguage("fre")
             md.setCrs(couche.crs())
             couche.setMetadata(md)
-        except Exception:
-            pass
+        except Exception as e:
+            self._jlog(f"⚠ Métadonnées INSPIRE non appliquées : {e}")
 
     def _valider_topologie(self, couche_source, couche_resultat):
         try:
@@ -351,8 +361,8 @@ class EraseWorker(QThread):
                             inter = geom.intersection(autre_geom)
                             if inter and not inter.isEmpty():
                                 surface_totale += da.measureArea(inter)
-                        except Exception:
-                            pass
+                        except Exception as e:
+                            self._jlog(f"⚠ Intersection ignorée (entités {feat.id()}/{cid}) : {e}")
 
             return nb_paires, surface_totale
         except Exception:
@@ -428,7 +438,7 @@ tr:hover{{background:#f1f1f1}}
 .footer{{margin-top:40px;font-size:0.9em;color:#666;text-align:center}}
 </style></head><body>
 <div class="container">
-<h1>📊 Rapport — EDEA_EraseTools v6.0</h1>
+<h1>📊 Rapport — EDEA_EraseTools v6.0.1</h1>
 <p><strong>Date :</strong> {html.escape(date_str)}</p>
 <p><strong>Algorithme :</strong> native:{html.escape(algo)}</p>
 <h2>🔹 Couches source</h2>
@@ -446,7 +456,7 @@ tr:hover{{background:#f1f1f1}}
 </table>
 <h2>💾 Fichier(s) de sortie</h2>
 <p>{html.escape(str(chemin))}</p>
-<div class="footer"><p>Genere par <strong>EDEA_EraseTools v6.0</strong> pour QGIS 3</p></div>
+<div class="footer"><p>Genere par <strong>EDEA_EraseTools v6.0.1</strong> pour QGIS 3</p></div>
 </div></body></html>"""
 
     def _process(self):
