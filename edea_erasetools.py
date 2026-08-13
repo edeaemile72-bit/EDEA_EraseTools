@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Plugin QGIS 3 — EDEA_EraseTools v6.0
+Plugin QGIS 3 — EDEA_EraseTools v6.0.1
 
 Plugin généralisé à TOUT type de couche vectorielle (points, lignes, polygones) :
 supprime la partie d'une couche source située à l'intérieur d'une couche de découpe.
@@ -53,6 +53,7 @@ from qgis.core import (
     QgsProcessingException, QgsProcessingProvider, QgsApplication,
     QgsFeatureSink, QgsSingleSymbolRenderer, QgsSymbol,
     QgsMapLayerProxyModel, QgsRectangle, QgsDataSourceUri,
+    QgsMessageLog, Qgis,
 )
 
 import processing
@@ -758,8 +759,11 @@ class EdeaEraseToolsPlugin:
                 renderer = QgsSingleSymbolRenderer(symbol)
                 couche.setRenderer(renderer)
                 couche.triggerRepaint()
-        except Exception:
-            pass
+        except Exception as e:
+            QgsMessageLog.logMessage(
+                f"Application de la symbologie ignorée : {e}",
+                "EDEA_EraseTools", Qgis.Warning
+            )
 
     def _layer_source_path(self, layer):
         source = layer.source()
