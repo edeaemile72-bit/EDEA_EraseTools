@@ -1,0 +1,45 @@
+[general]
+name=EDEA_EraseTools
+qgisMinimumVersion=3.22
+qgisMaximumVersion=3.99
+description=Removes the part of a vector layer (points, lines or polygons) located inside a clip layer, with asynchronous processing, batch mode, and multi-format export (SHP, GPKG, GeoJSON, KML, PostGIS, GeoServer).
+version=6.6.0
+author=Dr. Ir. EDEA O. Emile, Enseignant-chercheur — Géomatique, Télédétection et Analyse Spatiale
+email=edeaemile72@gmail.com
+about=EDEA_EraseTools performs a generic difference/erase operation: it removes the part of a source vector layer (points, lines or polygons) located inside a clip layer, regardless of the geometry type of either layer. Key features: asynchronous processing (QThread, non-blocking UI), simple / batch / preview modes, optional buffer before processing, inverted (clip) mode and symmetric difference, interactive selection of clip features on the map, overlap validation on the clip layer, post-processing topology checks, automatic INSPIRE metadata, multi-format export (Shapefile, GeoPackage, GeoJSON, KML, PostGIS, GeoServer via REST API), matplotlib statistics charts, HTML/CSV reports, exportable action history, and a before/after comparison view. Also available as a QGIS Processing algorithm (Vector overlay > EDEA_EraseTools).
+
+  Français : EDEA_EraseTools supprime la partie d'une couche source (points, lignes ou polygones) située à l'intérieur d'une couche de découpe, quel que soit le type de géométrie des deux couches. Fonctionnalités principales : traitement asynchrone, modes simple / par lot / prévisualisation, buffer optionnel, mode inversé (clip) et différence symétrique, sélection interactive des entités de découpe sur la carte, validation des chevauchements, validation topologique post-traitement, métadonnées INSPIRE automatiques, export multi-format (Shapefile, GeoPackage, GeoJSON, KML, PostGIS, GeoServer), statistiques avec graphiques matplotlib, rapports HTML/CSV, historique exportable des traitements, et comparaison visuelle avant/après. Disponible aussi comme algorithme Processing (Vector overlay > EDEA_EraseTools).
+changelog=
+    6.6.0
+    - Nouvelle option « Export Excel des statistiques (.xlsx) » dans l'onglet « Regrouper / Agréger » : enregistre la table agrégée dans un classeur Excel stylisé (en-tête en couleur, volet figé, largeurs auto) — fichier *_statistiques.xlsx (via openpyxl).
+    6.5.0
+    - Nouvelle option « Export PDF des statistiques » dans l'onglet « Regrouper / Agréger » : enregistre le récapitulatif d'agrégation en PDF (*_statistiques.pdf) via Qt (QTextDocument + QPrinter), sans dépendance externe.
+    6.4.0
+    - Bouton « ε » ouvrant le constructeur d'expressions QGIS à côté des champs « Filtre avant agrégation » et « Regrouper par ».
+    - Nouveau rapport HTML récapitulatif des statistiques d'agrégation (métadonnées, fonctions utilisées, résultats par groupe) enregistré à côté de la sortie (*_rapport.html).
+    - Nouvelle option de calcul de géométrie après agrégation (aire/périmètre pour les polygones, longueur pour les lignes, X/Y pour les points ; calcul ellipsoïdal).
+    6.3.0
+    - Ajout d'une option de filtrage des entités AVANT agrégation (expression attributaire QGIS) : disponible dans l'onglet « Regrouper / Agréger » et comme paramètre « Filtre » de l'algorithme Processing. Seules les entités retenues par le filtre sont regroupées et agrégées.
+    6.2.0
+    - Intégration de l'outil « Regrouper et agréger » directement comme onglet « Regrouper / Agréger » dans la fenêtre principale : choix de la couche, du champ/expression de regroupement, et tableau une-ligne-par-champ (fonction, délimiteur, nom de sortie).
+    - Nouvelle option « Export automatique des statistiques (CSV) » : la table attributaire agrégée est enregistrée en CSV (suffixe _statistiques.csv) à la fin du traitement.
+    - Jeu de données de démonstration (provinces → pays) et script de test fournis.
+    6.1.0
+    - Nouvel outil « EDEA Regrouper et agréger » (algorithme Processing + entrée dans le menu Vecteur > EDEA_EraseTools) : regroupe les entités partageant la même valeur d'un champ (ou d'une expression), fusionne leurs géométries (collecte multi-parties) et calcule des statistiques par champ restant (min, max, somme, nombre, moyenne, médiane, écart type, première/dernière valeur, concaténation et concaténation sans doublon). Tableau d'agrégats natif QGIS (QgsProcessingParameterAggregate, QGIS ≥ 3.24).
+    6.0.1
+    - Correctifs suite au scan de sécurité plugins.qgis.org : validation explicite du schéma d'URL (http/https uniquement) avant l'appel à urlopen pour l'export GeoServer, et journalisation des exceptions précédemment ignorées silencieusement (symbologie, métadonnées INSPIRE, calcul de chevauchement)
+    6.0 :
+    - Généralisation complète à tout type de couche vectorielle (points, lignes, polygones), pour la couche source comme pour la couche de découpe (anciennement limité aux réseaux linéaires et polygones ARRD sous le nom "Erase Réseau ARRD")
+    - Ajout de l'historique des actions exécutées (exportable en CSV)
+    - Ajout du zoom comparatif avant/après (fenêtre à deux cartes synchronisées)
+    - Ajout de l'export direct vers GeoServer (API REST)
+    - Ajout de la validation des chevauchements sur la couche de découpe
+tracker=https://github.com/edeaemile72-bit/EDEA_EraseTools/issues
+repository=https://github.com/edeaemile72-bit/EDEA_EraseTools
+category=Vector
+tags=vector,difference,erase,clip,generic,batch,processing,asynchronous,statistics,report,csv,postgis,geoserver,matplotlib,inspire,topology,history,overlap,aggregate,dissolve,groupby,summary
+homepage=https://github.com/edeaemile72-bit/EDEA_EraseTools
+icon=icon.png
+experimental=False
+deprecated=False
+server=False

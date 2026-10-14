@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/edea_erasetools/">
+        <file>icon.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EdeaEraseToolsDialogBase</class>
+ <widget class="QDialog" name="EdeaEraseToolsDialogBase">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>700</width><height>920</height></rect>
+  </property>
+  <property name="windowTitle"><string>EDEA_EraseTools — v6.0</string></property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+
+   <!-- TITRE -->
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_titre">
+     <item>
+      <widget class="QLabel" name="label_titre">
+       <property name="font">
+        <font><pointsize>14</pointsize><weight>75</weight><bold>true</bold></font>
+       </property>
+       <property name="text"><string>🗺️ EDEA_EraseTools</string></property>
+      </widget>
+     </item>
+     <item><spacer name="spacer_titre"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+     <item><widget class="QPushButton" name="btnAide"><property name="text"><string>❓ Aide</string></property></widget></item>
+    </layout>
+   </item>
+
+   <!-- ONGLETS -->
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+
+     <!-- ONGLET 1 : SOURCE -->
+     <widget class="QWidget" name="tabSource">
+      <attribute name="title"><string>Source</string></attribute>
+      <layout class="QVBoxLayout" name="layoutTabSource">
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_couches">
+         <property name="title"><string>Couches source (tout type de géométrie : points, lignes, polygones)</string></property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_source"><property name="text"><string>Couche source :</string></property></widget>
+          </item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="hbox_source">
+            <item><widget class="QComboBox" name="comboSource"/></item>
+            <item><widget class="QLabel" name="labelSCRSource"><property name="text"><string>SCR: —</string></property></widget></item>
+           </layout>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLineEdit" name="lineEditFiltreSource">
+            <property name="placeholderText"><string>Filtre attributaire couche source (expression QGIS)</string></property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_decoupe"><property name="text"><string>Couche de découpe :</string></property></widget>
+          </item>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="hbox_decoupe">
+            <item><widget class="QComboBox" name="comboDecoupe"/></item>
+            <item><widget class="QLabel" name="labelSCRDecoupe"><property name="text"><string>SCR: —</string></property></widget></item>
+           </layout>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QLineEdit" name="lineEditFiltreDecoupe">
+            <property name="placeholderText"><string>Filtre attributaire couche de découpe (expression QGIS)</string></property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="checkValiderGeom">
+            <property name="text"><string>Vérifier et réparer les géométries invalides avant traitement</string></property>
+            <property name="checked"><bool>true</bool></property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="checkFusionnerARRD">
+            <property name="text"><string>Fusionner toutes les entités de la couche de découpe en une seule</string></property>
+            <property name="checked"><bool>true</bool></property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QCheckBox" name="checkVerifierSCR">
+            <property name="text"><string>Vérifier la compatibilité des SCR (alerte si différents)</string></property>
+            <property name="checked"><bool>true</bool></property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QCheckBox" name="checkValidationChevauchement">
+            <property name="text"><string>Détecter les chevauchements entre entités de la couche de découpe avant traitement</string></property>
+            <property name="checked"><bool>false</bool></property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_buffer">
+         <property name="title"><string>Buffer optionnel (avant traitement)</string></property>
+         <layout class="QHBoxLayout" name="hbox_buffer">
+          <item>
+           <widget class="QCheckBox" name="checkBuffer">
+            <property name="text"><string>Activer le buffer</string></property>
+           </widget>
+          </item>
+          <item><widget class="QLabel" name="label_buffer_dist"><property name="text"><string>Distance :</string></property></widget></item>
+          <item><widget class="QDoubleSpinBox" name="spinBufferDist"><property name="decimals"><number>2</number></property><property name="maximum"><double>999999.99</double></property><property name="value"><double>10.00</double></property></widget></item>
+          <item><widget class="QLabel" name="label_buffer_unit"><property name="text"><string>mètres</string></property></widget></item>
+          <item><widget class="QLabel" name="label_buffer_segments"><property name="text"><string>Segments :</string></property></widget></item>
+          <item><widget class="QSpinBox" name="spinBufferSegments"><property name="minimum"><number>3</number></property><property name="maximum"><number>100</number></property><property name="value"><number>8</number></property></widget></item>
+          <item><spacer name="spacer_buffer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_selection">
+         <property name="title"><string>Sélection interactive sur la carte</string></property>
+         <layout class="QHBoxLayout" name="hbox_selection">
+          <item>
+           <widget class="QCheckBox" name="checkSelectionCarte">
+            <property name="text"><string>Utiliser la sélection courante sur la carte</string></property>
+           </widget>
+          </item>
+          <item><widget class="QPushButton" name="btnSelectionnerARRD"><property name="text"><string>🖱️ Sélectionner la couche sur la carte</string></property></widget></item>
+          <item><spacer name="spacer_selection"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+         </layout>
+        </widget>
+       </item>
+
+      </layout>
+     </widget>
+
+     <!-- ONGLET 2 : TRAITEMENT -->
+     <widget class="QWidget" name="tabTraitement">
+      <attribute name="title"><string>Traitement</string></attribute>
+      <layout class="QVBoxLayout" name="layoutTabTraitement">
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_mode">
+         <property name="title"><string>Mode de traitement</string></property>
+         <layout class="QVBoxLayout" name="verticalLayout_mode">
+          <item><widget class="QRadioButton" name="radioSimple"><property name="text"><string>Simple — un seul résultat</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item><widget class="QRadioButton" name="radioBatch"><property name="text"><string>Par lot — un fichier par entité de la couche de découpe</string></property></widget></item>
+          <item><widget class="QRadioButton" name="radioPreview"><property name="text"><string>Prévisualisation temporaire (mémoire)</string></property></widget></item>
+          <item><widget class="QCheckBox" name="checkModeInverse"><property name="text"><string>Mode inversé : conserver l'intérieur (CLIP) au lieu de l'extérieur (ERASE)</string></property></widget></item>
+          <item><widget class="QCheckBox" name="checkDiffSymetrique"><property name="text"><string>Mode différence symétrique (conserver les deux parties séparément)</string></property></widget></item>
+          <item><widget class="QCheckBox" name="checkCoucheSupprimee"><property name="text"><string>Créer aussi une couche de la partie SUPPRIMÉE (intersection)</string></property><property name="checked"><bool>true</bool></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_sortie">
+         <property name="title"><string>Fichier de sortie</string></property>
+         <layout class="QFormLayout" name="formLayout_sortie">
+          <item row="0" column="0"><widget class="QLabel" name="label_format"><property name="text"><string>Format :</string></property></widget></item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboFormat">
+            <item><property name="text"><string>ESRI Shapefile (.shp)</string></property></item>
+            <item><property name="text"><string>GeoPackage (.gpkg)</string></property></item>
+            <item><property name="text"><string>GeoJSON (.geojson)</string></property></item>
+            <item><property name="text"><string>KML (.kml)</string></property></item>
+            <item><property name="text"><string>PostGIS (base de données)</string></property></item>
+            <item><property name="text"><string>GeoServer (API REST)</string></property></item>
+           </widget>
+          </item>
+          <item row="1" column="0"><widget class="QLabel" name="label_action"><property name="text"><string>Action :</string></property></widget></item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="comboAction">
+            <item><property name="text"><string>Créer un nouveau fichier</string></property></item>
+            <item><property name="text"><string>Remplacer la couche originale (backup auto)</string></property></item>
+           </widget>
+          </item>
+          <item row="2" column="0"><widget class="QLabel" name="label_dossier"><property name="text"><string>Dossier de sortie :</string></property></widget></item>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_dossier">
+            <item><widget class="QLineEdit" name="lineEditDossier"><property name="placeholderText"><string>Dossier de destination…</string></property></widget></item>
+            <item><widget class="QPushButton" name="btnBrowseDossier"><property name="text"><string>Parcourir…</string></property></widget></item>
+           </layout>
+          </item>
+          <item row="3" column="0"><widget class="QLabel" name="label_prefixe"><property name="text"><string>Préfixe (lot) :</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="lineEditPrefixe"><property name="text"><string>couche_hors_decoupe_</string></property></widget></item>
+          <item row="4" column="0"><widget class="QLabel" name="label_expr_batch"><property name="text"><string>Expression nom (lot) :</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLineEdit" name="lineEditExprBatch"><property name="placeholderText"><string>Expression QGIS, ex: concat('entite_', "nom")</string></property></widget></item>
+          <item row="5" column="0"><widget class="QLabel" name="label_scr"><property name="text"><string>SCR de sortie :</string></property></widget></item>
+          <item row="5" column="1"><widget class="QComboBox" name="comboSCR"/></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_postgis">
+         <property name="title"><string>Paramètres PostGIS (si format = PostGIS)</string></property>
+         <layout class="QFormLayout" name="formLayout_postgis">
+          <item row="0" column="0"><widget class="QLabel" name="label_pg_host"><property name="text"><string>Hôte :</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="lineEditPgHost"><property name="text"><string>localhost</string></property></widget></item>
+          <item row="1" column="0"><widget class="QLabel" name="label_pg_port"><property name="text"><string>Port :</string></property></widget></item>
+          <item row="1" column="1"><widget class="QSpinBox" name="spinPgPort"><property name="minimum"><number>1</number></property><property name="maximum"><number>65535</number></property><property name="value"><number>5432</number></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="label_pg_db"><property name="text"><string>Base :</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="lineEditPgDb"><property name="placeholderText"><string>nom_base</string></property></widget></item>
+          <item row="3" column="0"><widget class="QLabel" name="label_pg_user"><property name="text"><string>Utilisateur :</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="lineEditPgUser"><property name="text"><string>postgres</string></property></widget></item>
+          <item row="4" column="0"><widget class="QLabel" name="label_pg_pass"><property name="text"><string>Mot de passe :</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLineEdit" name="lineEditPgPass"><property name="echoMode"><enum>QLineEdit::Password</enum></property></widget></item>
+          <item row="5" column="0"><widget class="QLabel" name="label_pg_schema"><property name="text"><string>Schéma :</string></property></widget></item>
+          <item row="5" column="1"><widget class="QLineEdit" name="lineEditPgSchema"><property name="text"><string>public</string></property></widget></item>
+          <item row="6" column="0"><widget class="QLabel" name="label_pg_table"><property name="text"><string>Table :</string></property></widget></item>
+          <item row="6" column="1"><widget class="QLineEdit" name="lineEditPgTable"><property name="placeholderText"><string>couche_hors_decoupe</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_geoserver">
+         <property name="title"><string>Paramètres GeoServer (si format = GeoServer)</string></property>
+         <layout class="QFormLayout" name="formLayout_geoserver">
+          <item row="0" column="0"><widget class="QLabel" name="label_gs_url"><property name="text"><string>URL GeoServer :</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="lineEditGsUrl"><property name="placeholderText"><string>http://localhost:8080/geoserver</string></property></widget></item>
+          <item row="1" column="0"><widget class="QLabel" name="label_gs_workspace"><property name="text"><string>Workspace :</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="lineEditGsWorkspace"><property name="placeholderText"><string>mon_workspace</string></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="label_gs_datastore"><property name="text"><string>Datastore :</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="lineEditGsDatastore"><property name="placeholderText"><string>mon_datastore</string></property></widget></item>
+          <item row="3" column="0"><widget class="QLabel" name="label_gs_user"><property name="text"><string>Utilisateur :</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="lineEditGsUser"><property name="text"><string>admin</string></property></widget></item>
+          <item row="4" column="0"><widget class="QLabel" name="label_gs_pass"><property name="text"><string>Mot de passe :</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLineEdit" name="lineEditGsPass"><property name="echoMode"><enum>QLineEdit::Password</enum></property></widget></item>
+          <item row="5" column="0"><widget class="QLabel" name="label_gs_layer"><property name="text"><string>Nom de la couche :</string></property></widget></item>
+          <item row="5" column="1"><widget class="QLineEdit" name="lineEditGsLayer"><property name="placeholderText"><string>couche_hors_decoupe</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+      </layout>
+     </widget>
+
+     <!-- ONGLET 3 : OPTIONS -->
+     <widget class="QWidget" name="tabOptions">
+      <attribute name="title"><string>Options</string></attribute>
+      <layout class="QVBoxLayout" name="layoutTabOptions">
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_options">
+         <property name="title"><string>Options avancées</string></property>
+         <layout class="QFormLayout" name="formLayout_options">
+          <item row="0" column="0"><widget class="QLabel" name="label_champ_id"><property name="text"><string>Champ identifiant (lot) :</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="comboChampId"/></item>
+          <item row="1" column="0" colspan="2"><widget class="QCheckBox" name="checkMergeBatch"><property name="text"><string>Fusionner tous les résultats du batch en une seule couche</string></property></widget></item>
+          <item row="2" column="0" colspan="2"><widget class="QCheckBox" name="checkAjouterCouche"><property name="text"><string>Ajouter automatiquement le(s) résultat(s) au projet</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="3" column="0" colspan="2"><widget class="QCheckBox" name="checkSymbologie"><property name="text"><string>Appliquer une symbologie automatique (vert = conservé, rouge = supprimé, orange = clip)</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="4" column="0" colspan="2"><widget class="QCheckBox" name="checkRapportHTML"><property name="text"><string>Générer un rapport HTML avec les statistiques</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="5" column="0" colspan="2"><widget class="QCheckBox" name="checkExportCSV"><property name="text"><string>Exporter les statistiques en CSV</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="6" column="0" colspan="2"><widget class="QCheckBox" name="checkTableBatch"><property name="text"><string>Créer une table de correspondance batch (CSV)</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="7" column="0" colspan="2"><widget class="QCheckBox" name="checkJournal"><property name="text"><string>Exporter le journal détaillé dans un fichier texte</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="8" column="0" colspan="2"><widget class="QCheckBox" name="checkTopologie"><property name="text"><string>Validation topologique post-traitement (vérifier les coupures)</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="9" column="0" colspan="2"><widget class="QCheckBox" name="checkMetadonnees"><property name="text"><string>Ajouter des métadonnées INSPIRE aux couches créées</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="10" column="0" colspan="2"><widget class="QCheckBox" name="checkHistorique"><property name="text"><string>Enregistrer cette exécution dans l'historique des actions</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item row="11" column="0" colspan="2"><widget class="QCheckBox" name="checkSauvegarderParams"><property name="text"><string>Sauvegarder les paramètres pour la prochaine session</string></property><property name="checked"><bool>true</bool></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+      </layout>
+     </widget>
+
+     <!-- ONGLET 4 : STATISTIQUES -->
+     <widget class="QWidget" name="tabStats">
+      <attribute name="title"><string>Statistiques</string></attribute>
+      <layout class="QVBoxLayout" name="layoutTabStats">
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_stats">
+         <property name="title"><string>Résumé numérique</string></property>
+         <layout class="QFormLayout" name="formLayout_stats">
+          <item row="0" column="0"><widget class="QLabel" name="label_stats_long_avant"><property name="text"><string>Mesure avant :</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLabel" name="labelValLongAvant"><property name="text"><string>—</string></property></widget></item>
+          <item row="1" column="0"><widget class="QLabel" name="label_stats_long_apres"><property name="text"><string>Mesure après :</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLabel" name="labelValLongApres"><property name="text"><string>—</string></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="label_stats_pourcent"><property name="text"><string>Pourcentage conservé :</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLabel" name="labelValPourcent"><property name="text"><string>—</string></property></widget></item>
+          <item row="3" column="0"><widget class="QLabel" name="label_stats_surface"><property name="text"><string>Mesure couche de découpe :</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLabel" name="labelValSurface"><property name="text"><string>—</string></property></widget></item>
+          <item row="4" column="0"><widget class="QLabel" name="label_stats_supprime"><property name="text"><string>Mesure supprimée :</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLabel" name="labelValSupprime"><property name="text"><string>—</string></property></widget></item>
+          <item row="5" column="0"><widget class="QLabel" name="label_stats_topo"><property name="text"><string>Problèmes topologiques :</string></property></widget></item>
+          <item row="5" column="1"><widget class="QLabel" name="labelValTopo"><property name="text"><string>—</string></property></widget></item>
+          <item row="6" column="0"><widget class="QLabel" name="label_stats_chevauchement"><property name="text"><string>Chevauchements détectés :</string></property></widget></item>
+          <item row="6" column="1"><widget class="QLabel" name="labelValChevauchement"><property name="text"><string>—</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_graph">
+         <property name="title"><string>Graphique</string></property>
+         <layout class="QVBoxLayout" name="layoutGraph">
+          <item>
+           <widget class="QLabel" name="labelGraphPlaceholder">
+            <property name="text"><string>Le graphique apparaîtra ici après le traitement.</string></property>
+            <property name="alignment"><set>Qt::AlignCenter</set></property>
+            <property name="minimumSize">
+             <size><width>0</width><height>200</height></size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+
+      </layout>
+     </widget>
+
+     <!-- ONGLET 5 : HISTORIQUE -->
+     <widget class="QWidget" name="tabHistorique">
+      <attribute name="title"><string>Historique</string></attribute>
+      <layout class="QVBoxLayout" name="layoutTabHistorique">
+       <item>
+        <widget class="QTableWidget" name="tableHistorique">
+         <column><property name="text"><string>Date</string></property></column>
+         <column><property name="text"><string>Mode</string></property></column>
+         <column><property name="text"><string>Algorithme</string></property></column>
+         <column><property name="text"><string>Couche source</string></property></column>
+         <column><property name="text"><string>Couche de découpe</string></property></column>
+         <column><property name="text"><string>Résultat</string></property></column>
+         <column><property name="text"><string>Entités</string></property></column>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="hbox_historique_boutons">
+         <item><widget class="QPushButton" name="btnEffacerHistorique"><property name="text"><string>🗑 Effacer l'historique</string></property></widget></item>
+         <item><widget class="QPushButton" name="btnExporterHistorique"><property name="text"><string>💾 Exporter (CSV)</string></property></widget></item>
+         <item><spacer name="spacer_historique"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+
+    </widget>
+   </item>
+
+   <!-- PROGRESSION -->
+   <item>
+    <widget class="QProgressBar" name="progressBar"><property name="value"><number>0</number></property></widget>
+   </item>
+
+   <!-- JOURNAL -->
+   <item>
+    <widget class="QTextEdit" name="textLog">
+     <property name="readOnly"><bool>true</bool></property>
+     <property name="placeholderText"><string>Journal d'exécution…</string></property>
+     <property name="maximumSize">
+      <size><width>16777215</width><height>150</height></size>
+     </property>
+    </widget>
+   </item>
+
+   <!-- BOUTONS -->
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_boutons">
+     <item><widget class="QPushButton" name="btnRapport"><property name="text"><string>📄 Rapport HTML</string></property><property name="enabled"><bool>false</bool></property></widget></item>
+     <item><widget class="QPushButton" name="btnCSV"><property name="text"><string>📊 Export CSV</string></property><property name="enabled"><bool>false</bool></property></widget></item>
+     <item><widget class="QPushButton" name="btnJournal"><property name="text"><string>📝 Journal</string></property><property name="enabled"><bool>false</bool></property></widget></item>
+     <item><widget class="QPushButton" name="btnZoomComparatif"><property name="text"><string>🔎 Zoom comparatif</string></property><property name="enabled"><bool>false</bool></property></widget></item>
+     <item><spacer name="horizontalSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+     <item><widget class="QPushButton" name="btnAnnuler"><property name="text"><string>⏹ Annuler</string></property><property name="enabled"><bool>false</bool></property></widget></item>
+     <item><widget class="QPushButton" name="btnExecuter"><property name="text"><string>▶ Exécuter</string></property></widget></item>
+     <item><widget class="QPushButton" name="btnFermer"><property name="text"><string>Fermer</string></property></widget></item>
+    </layout>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/><connections/>
+</ui>
